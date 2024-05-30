@@ -7,9 +7,6 @@ ol,
 ul {
   padding-left: 30px;
 }
-.board {
-  background-color: red;
-}
 
 .board-row:after {
   clear: both;

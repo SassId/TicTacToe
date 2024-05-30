@@ -1,0 +1,6 @@
+bookmark:
+
+
+    Remarque
+
+    Nous avons découpé l’élément renvoyé sur plusieurs lignes pour des raisons de lisibilité, et ajouté des parenthèses pour que JavaScript ne considère pas le return comme autonome et renvoyant undefined, ce qui casserait notre code.
