@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -53,17 +53,20 @@ class Game extends React.Component {
           squares: Array(9).fill(null),
         },
       ],
+      stepNumber: 0,
       xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
       history: history.concat([
@@ -71,20 +74,36 @@ class Game extends React.Component {
           squares: squares,
         },
       ]),
+      stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: step % 2 === 0,
     });
   }
 
   render() {
     const history = this.state.history;
-    const current = history[history.length - 1];
+    const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ? "Go back to move # " + move : "Go back to start";
       return (
-        <li>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        <li key={move}>
+          <button
+            onClick={() => this.jumpTo(move)}
+            style={{
+              color: "blue",
+              margin: 2,
+            }}
+          >
+            {desc}
+          </button>
         </li>
       );
     });
@@ -99,19 +118,21 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <div>
+        <div className="greetings">
           <h1>Hello, world</h1>
-          <h2>Let's play Tic Tac Toe !</h2>
+          <h2 style={{ color: "red" }}>Let's play Tic Tac Toe !</h2>
+        </div>
+        <div className="game-turn" style={{ color: "green" }}>
+          {status}
         </div>
         <div className="game-board">
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
           <ol>{moves}</ol>
+          {/* </div>
+        <div className="game-info"> */}
         </div>
       </div>
     );
@@ -119,9 +140,6 @@ class Game extends React.Component {
 }
 
 // ========================================
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game />);
 
 function calculateWinner(squares) {
   const lines = [
@@ -142,3 +160,6 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Game />);

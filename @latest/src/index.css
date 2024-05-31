@@ -1,11 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
-}
-
-ol,
-ul {
-  padding-left: 30px;
 }
 
 .board-row:after {
@@ -43,11 +44,34 @@ ul {
 
 .game {
   display: flex;
-  flex-direction: ;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: solid blue;
+  padding: 50px;
 }
 
-.game-info {
-  margin-left: 20px;
+.greetings {
+  border: solid green;
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+}
+
+.game-board {
+  border: solid brown;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+ol {
+  list-style-type: none;
+  border: solid pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
